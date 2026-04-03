@@ -23,3 +23,5 @@ print("hello world")
 --- | --- | ---
 a | b | c
 d | e | f
+
+~~hello~~
