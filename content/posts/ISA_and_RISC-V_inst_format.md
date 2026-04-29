@@ -14,6 +14,7 @@ draft: false
 컴퓨터는 0과 1만 알아들을 수 있다고들 한다. 그런데 나는 컴퓨터에게 0과 1로 명령한 적이 없다.
 컴퓨터는 어셈블리 명령어를 어떻게 binary로 변환할까? 변환 규칙이 있을까?  
 이번에는 CISC/RISC 비교 및 ISA 3가지를 알아보고, 그 중 RISC-V의 instruction format에 대해 정리해보려 한다.
+
 ---
 
 # 본론1: CISC vs RISC
@@ -50,6 +51,7 @@ ARM은 주로 모바일, 임베디드, IoT 등에 사용된다.
 
 RISC-V는 x86,ARM과 다르게 오픈소스여서 누구나 이를 이용해 칩을 설계해볼 수 있다.  
 따라서 이 글과 앞으로의 CA관련 글 대부분에서 RISC-V를 기준으로 설명할것이다.  
+
 ---
 
 # 본론3: RISC-V Instruction Format
@@ -69,24 +71,24 @@ format은 다음의 field들로 구성되어 있다.
 | funct7 | 7-bit function code(additional opcode) |
 
 ### 1. R-format
-![R-type.png](R-format.png)
+![R-type.png](/images/ISA_and_RISC-V_inst_format/R-format.png)
 ex) `add`, `sub`, `or`, `sll`...
-
-### 2. I-format
-![img.png](I-format.png)
+ 
+ ### 2. I-format
+![img.png](/images/ISA_and_RISC-V_inst_format/I-format.png)
 ex) `addi`, `lw`...   
-+) immediate field는 상수 또는 offset으로 사용된다.
-
-### 3. S-format
-![img.png](S-format.png)
+ +) immediate field는 상수 또는 offset으로 사용된다.
+ 
+ ### 3. S-format
+![img.png](/images/ISA_and_RISC-V_inst_format/S-format.png)
 ex) `sw`...
-
-### 4. B-format
-![img.png](SB-format.png)
+ 
+ ### 4. B-format
+![img.png](/images/ISA_and_RISC-V_inst_format/SB-format.png)
 ex) `beq`, `bne`...
-
-### 5. J-format
-![img.png](UJ-format.png)
+ 
+ ### 5. J-format
+![img.png](/images/ISA_and_RISC-V_inst_format/UJ-format.png)
 ex) `jal`...
 
 ### 6. U-format
@@ -105,4 +107,3 @@ RISC처럼 동작한다.
 막상 글을 쓰고 보니 Instruction format보단 CISC/RISC, ISA의 분량이 더 많아진 것 같다.  
 사실 Imm field의 sign extend나 register종류, instrution 사용 형식 등
 적을 만한 내용은 더 많으나 슬슬 잠이 와서 그만 적어야겠다. 지금 1:20인데 내일 1교시 수업이기도 하고..  
-
