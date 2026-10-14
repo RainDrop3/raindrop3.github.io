@@ -76,8 +76,19 @@ function toSlug(value: string): string {
   return slug.length > 0 ? slug : "uncategorized";
 }
 
-function parsePostFile(fileName: string): PostDetail | null {
-  const fullPath = path.join(POSTS_DIR, fileName);
+// content/posts 아래를 재귀적으로 탐색한다. 하위 폴더(과목별 등)는 정리용일 뿐 URL에는 영향이 없다.
+function listPostFiles(dir: string): string[] {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      return listPostFiles(fullPath);
+    }
+
+    return POST_EXTENSIONS.some((ext) => entry.name.toLowerCase().endsWith(ext)) ? [fullPath] : [];
+  });
+}
+
+function parsePostFile(fullPath: string): PostDetail | null {
   const raw = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(raw);
   const frontmatter = data as RawFrontmatter;
@@ -86,7 +97,7 @@ function parsePostFile(fileName: string): PostDetail | null {
     return null;
   }
 
-  const slug = fileName.replace(/\.(md|mdx)$/i, "");
+  const slug = path.basename(fullPath).replace(/\.(md|mdx)$/i, "");
   const title = frontmatter.title ?? slug;
   const parsedDate = parseDate(frontmatter.date ?? "1970-01-01");
   const date = toDateKey(parsedDate);
@@ -110,12 +121,20 @@ export function getAllPosts(): PostDetail[] {
     return [];
   }
 
-  return fs
-    .readdirSync(POSTS_DIR)
-    .filter((fileName) => POST_EXTENSIONS.some((ext) => fileName.toLowerCase().endsWith(ext)))
+  const posts = listPostFiles(POSTS_DIR)
     .map(parsePostFile)
-    .filter((post): post is PostDetail => post !== null)
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .filter((post): post is PostDetail => post !== null);
+
+  // slug는 파일명만으로 만들어지므로, 서로 다른 폴더에 같은 파일명이 있으면 URL이 겹친다.
+  const seen = new Set<string>();
+  for (const post of posts) {
+    if (seen.has(post.slug)) {
+      throw new Error(`Duplicate post slug "${post.slug}" in content/posts. File names must be unique across folders.`);
+    }
+    seen.add(post.slug);
+  }
+
+  return posts.sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function getAllPostsMeta(): PostMeta[] {
