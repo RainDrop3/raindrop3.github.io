@@ -5,7 +5,7 @@ category: "Computer Network"
 tags:
   - NW
 summary: "Network Core의 패킷 교환과 회선 교환 비교 정리"
-draft: true
+draft: false
 ---
 
 # 개요
