@@ -1,11 +1,11 @@
 ---
 title: "저장 매체와 디스크 접근 시간"
-date: "2026-10-15"
+date: "2026-10-18"
 category: "File Structure"
 tags:
   - FS
 summary: "메모리 계층 구조와 하드디스크 접근 시간, 블록 단위 접근 정리"
-draft: true
+draft: false
 ---
 
 # 개요
