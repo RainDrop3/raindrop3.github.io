@@ -6,11 +6,10 @@ const EMAIL_ADDRESS = "kanghy6220@gmail.com";
 export default function ProfileCard() {
   return (
     <section className="rounded-2xl border border-zinc-200 bg-white p-5">
-      <div className="flex items-start justify-between">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">Profile</p>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold">Kang</h2>
         <ThemeToggle />
       </div>
-      <h2 className="mt-3 text-xl font-bold">Kang</h2>
       <p className="mt-2 text-sm leading-6 text-zinc-600">가장 중요한 것은 기본기</p>
       <p className="mt-3 text-sm text-zinc-500">CA · OS · NW · DB · PL</p>
 

@@ -14,8 +14,9 @@ export default function Home() {
   const categories = getCategorySummaries();
   const latestUpdatedAt = posts[0]?.dateText ?? "-";
 
-  const recentPosts = posts.slice(0, 5);
-  const topTags = getTagSummaries(5);
+  const recentPosts = posts.slice(0, 3);
+  const tags = getTagSummaries();
+  const topTags = tags.slice(0, 5);
 
   const archives = getMonthlyArchiveSummaries(5);
 
@@ -24,11 +25,11 @@ export default function Home() {
       <Header
         postsCount={posts.length}
         categoriesCount={categories.length}
-        tagsCount={topTags.length}
+        tagsCount={tags.length}
         latestUpdatedAt={latestUpdatedAt}
       />
 
-      <RecentList posts={posts} />
+      <RecentList posts={recentPosts} />
 
       <section className="grid gap-4 lg:grid-cols-2">
         <PopularTag tags={topTags} />
